@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday My Love 💙</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Particle Canvas -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Floating Hearts Container -->
+  <div id="hearts-container"></div>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="screen active">
+    <div class="loading-content">
+      <div class="loading-heart">💙</div>
+      <p class="loading-text">Preparing something special for you...</p>
+      <div class="loading-bar"><div class="loading-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- Page 1: Passcode -->
+  <div id="page-passcode" class="screen">
+    <div class="page-content">
+      <h1 class="title glowing">Hey love 💙</h1>
+      <p class="subtitle">Enter the secret code to unlock your surprise</p>
+      <div class="keypad-display">
+        <div id="code-dots">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+      <div class="keypad">
+        <button class="key" data-val="1">1</button>
+        <button class="key" data-val="2">2</button>
+        <button class="key" data-val="3">3</button>
+        <button class="key" data-val="4">4</button>
+        <button class="key" data-val="5">5</button>
+        <button class="key" data-val="6">6</button>
+        <button class="key" data-val="7">7</button>
+        <button class="key" data-val="8">8</button>
+        <button class="key" data-val="9">9</button>
+        <button class="key key-clear" data-val="clear">✕</button>
+        <button class="key" data-val="0">0</button>
+        <button class="key key-enter" data-val="enter">✓</button>
+      </div>
+      <p id="passcode-error" class="error-msg hidden">Wrong code 😤 try again baby</p>
+      <p class="hint-text">Hint: The day we first talked 💙</p>
+    </div>
+  </div>
+
+  <!-- Page 2: Birthday Intro -->
+  <div id="page-intro" class="screen">
+    <div class="page-content centered">
+      <div class="cake-emoji animate-bounce">🎂</div>
+      <h1 class="title big-title glowing">Happy Birthday<br/>My Love</h1>
+      <p class="subtitle">I made something special just for you.</p>
+      <p class="subtitle small">Every pixel of this was made with love 💙</p>
+      <button class="btn btn-primary" onclick="goTo('page-ready')">Continue →</button>
+    </div>
+  </div>
+
+  <!-- Page 3: Ready? -->
+  <div id="page-ready" class="screen">
+    <div class="page-content centered">
+      <h2 class="title">Are you ready for your surprise? 🎁</h2>
+      <p class="subtitle">I put my whole heart into this...</p>
+      <div class="choice-btns">
+        <button class="btn btn-yes" onclick="goTo('page-gifts')">YES, I'm ready! 🥰</button>
+        <button class="btn btn-no" onclick="goTo('page-no-choice')">No... 😅</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page 3b: No Choice -->
+  <div id="page-no-choice" class="screen">
+    <div class="page-content centered">
+      <div class="big-emoji">😌</div>
+      <h2 class="title">You don't have a choice baby</h2>
+      <p class="subtitle">You're getting this surprise whether you like it or not.</p>
+      <p class="subtitle small">I worked too hard on this 😤💙</p>
+      <button class="btn btn-primary" onclick="goTo('page-gifts')">Okay fine, I'm ready 🥹</button>
+    </div>
+  </div>
+
+  <!-- Page 4: Gifts -->
+  <div id="page-gifts" class="screen">
+    <div class="page-content">
+      <h2 class="title centered">Pick your gifts 🎁</h2>
+      <p class="subtitle centered">Each one holds something from my heart</p>
+      <div class="gifts-container">
+        <div class="gift-box" id="gift1" onclick="openGift(1)">
+          <div class="gift-lid"></div>
+          <div class="gift-body">
+            <div class="gift-ribbon"></div>
+          </div>
+          <div class="gift-reveal hidden">
+            <div class="gift-emoji">💌</div>
+            <h3>My Favorite Memory</h3>
+            <p>That moment you first made me laugh so hard I couldn't breathe — I knew right then you were something special. I replay it every time I miss you.</p>
+          </div>
+        </div>
+        <div class="gift-box" id="gift2" onclick="openGift(2)">
+          <div class="gift-lid"></div>
+          <div class="gift-body">
+            <div class="gift-ribbon"></div>
+          </div>
+          <div class="gift-reveal hidden">
+            <div class="gift-emoji">⭐</div>
+            <h3>What I Love About You</h3>
+            <p>Your laugh, your warmth, the way you care. The way you never give up. The way you make me feel seen. I could write a thousand pages and still not cover it all.</p>
+          </div>
+        </div>
+        <div class="gift-box" id="gift3" onclick="openGift(3)">
+          <div class="gift-lid"></div>
+          <div class="gift-body">
+            <div class="gift-ribbon"></div>
+          </div>
+          <div class="gift-reveal hidden">
+            <div class="gift-emoji">🌙</div>
+            <h3>My Promise to You</h3>
+            <p>On your birthday, I promise to keep choosing you. Every single day. Through the hard days and the best ones. You deserve a love that shows up — and I will.</p>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary centered-btn" id="gifts-next-btn" onclick="goTo('page-cake')" style="opacity:0;pointer-events:none;margin-top:2rem;">Make a Wish 🎂</button>
+    </div>
+  </div>
+
+  <!-- Page 5: Cake -->
+  <div id="page-cake" class="screen">
+    <div class="page-content centered">
+      <h2 class="title">Make a wish 🌟</h2>
+      <p class="subtitle">Close your eyes, think of something wonderful...</p>
+      <div class="cake-container" id="cake-container">
+        <div class="candles">
+          <div class="candle" id="c1"><div class="flame"></div></div>
+          <div class="candle" id="c2"><div class="flame"></div></div>
+          <div class="candle" id="c3"><div class="flame"></div></div>
+          <div class="candle" id="c4"><div class="flame"></div></div>
+          <div class="candle" id="c5"><div class="flame"></div></div>
+        </div>
+        <div class="cake-body">
+          <div class="cake-top"></div>
+          <div class="cake-mid"></div>
+          <div class="cake-bot"></div>
+        </div>
+        <div class="cake-plate"></div>
+      </div>
+      <button class="btn btn-primary" id="blow-btn" onclick="blowCandles()">💨 Blow!</button>
+      <p id="wish-msg" class="subtitle hidden wish-msg">✨ Wish made! I hope it comes true 🤍</p>
+      <button class="btn btn-secondary hidden" id="cake-next-btn" onclick="goTo('page-letter')">Read my letter to you 💌</button>
+    </div>
+  </div>
+
+  <!-- Page 6: Love Letter -->
+  <div id="page-letter" class="screen">
+    <div class="page-content centered">
+      <div class="envelope-container" id="envelope-container" onclick="openEnvelope()">
+        <div class="envelope" id="envelope">
+          <div class="envelope-flap" id="envelope-flap"></div>
+          <div class="envelope-body">
+            <div class="envelope-heart">💙</div>
+          </div>
+        </div>
+        <p class="tap-hint">Tap to open 💌</p>
+      </div>
+      <div class="letter-content hidden" id="letter-content">
+        <div class="letter-paper">
+          <h3 class="letter-greeting">My love,</h3>
+          <p>Today is your day. And though the world keeps spinning like every other Wednesday, to me this day is everything — because you exist in it.</p>
+          <p>I'm so lucky to have you. Not just because you're kind, or funny, or the most stubborn person I know (in the best way) but because you chose me too. And that still feels unreal.</p>
+          <p>You make my life better every day. Even the boring ones. Even the ones where we barely talk. You're somewhere in the back of my mind, making everything a little warmer.</p>
+          <p>I want you to know that I see you. I see how hard you try. I see how deeply you feel things, even when you pretend you don't. I see the person you're becoming, and I am so proud of you.</p>
+          <p>Happy birthday, my handsome. You deserve all the good things this world has to offer. And I'm going to do my best to be one of them.</p>
+          <p class="letter-sign">With all my love,<br/><em>Yours ammu baby 💙</em></p>
+        </div>
+        <button class="btn btn-primary" onclick="goTo('page-gallery')">Our Memories 📷</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page 7: Memory Gallery -->
+  <!-- Page 7: Memory Gallery -->
+<div id="page-gallery" class="screen">
+  <div class="page-content">
+    <h2 class="title centered">Our Moments 💙</h2>
+    <p class="subtitle centered">Every photo is a piece of my heart</p>
+
+    <div class="polaroid-grid">
+
+      <div class="polaroid" style="--rot: -3deg; --delay: 0s">
+        <img src="assets/beginning_of_us.jpeg" class="polaroid-img" alt="">
+        <p>The beginning of us 💙</p>
+      </div>
+
+      <div class="polaroid" style="--rot: 2deg; --delay: 0.1s">
+        <img src="assets/he_sweet.jpeg" class="polaroid-img" alt="">
+        <p>You always make me laugh 😂</p>
+      </div>
+
+      <div class="polaroid" style="--rot: -2deg; --delay: 0.2s">
+        <img src="assets\late_night.jpeg" class="polaroid-img" alt="">
+        <p>Late night conversations 🌙</p>
+      </div>
+
+      <div class="polaroid" style="--rot: 3deg; --delay: 0.3s">
+        <img src="assets/moments.jpeg " class="polaroid-img" alt="">
+        <p>Simple moments, best moments ☕</p>
+      </div>
+
+      <div class="polaroid" style="--rot: -1deg; --delay: 0.4s">
+        <img src="assets/miss_us_this.jpeg" class="polaroid-img" alt="">
+        <p>I miss you every day 💙</p>
+      </div>
+
+      <div class="polaroid" style="--rot: 2.5deg; --delay: 0.5s">
+        <img src="assets/miss_us.jpeg" class="polaroid-img" alt="">
+        <p>You are my favourite person 🌟</p>
+      </div>
+
+    </div>
+
+    <div class="centered" style="margin-top:2.5rem;">
+      <button class="btn btn-primary" onclick="goTo('page-final')">
+        One last thing... 💙
+      </button>
+    </div>
+
+  </div>
+</div>
+  <!-- Page 8: Final -->
+  <div id="page-final" class="screen">
+    <div class="page-content centered final-content">
+      <div class="confetti-burst" id="confetti-burst"></div>
+      <h1 class="title mega-title glowing">Happy Birthday<br/>My Handsome ❤️</h1>
+      <p class="subtitle">I love you more than you know.</p>
+      <p class="subtitle small">Thank you for existing. Thank you for being mine. 💙</p>
+      <div class="final-hearts" id="final-hearts"></div>
+      <button class="btn btn-glow" onclick="restartSurprise()">💙 From the beginning</button>
+      <!-- Easter Egg trigger -->
+      <div id="easter-egg-trigger" title="shhh... 🤫">✨</div>
+      <div id="easter-egg-popup" class="hidden">
+        <p>🤫 Psst — if you're reading this, I hid a little secret just for you. No matter where life takes us, I want you to know: choosing you was the easiest decision I ever made. I love you endlessly, in all the ways you see and all the ones you don't. 💙</p>
+        <button onclick="document.getElementById('easter-egg-popup').classList.add('hidden')">close 🤍</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Music toggle -->
+  <div id="music-btn" class="music-toggle" onclick="toggleMusic()" title="Toggle music">🎵</div>
+
+  <!-- Audio elements -->
+  <audio id="bg-music" loop>
+    <!-- Will use Web Audio API as fallback -->
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
